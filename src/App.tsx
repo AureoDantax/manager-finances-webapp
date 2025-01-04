@@ -1,24 +1,56 @@
-import { useState } from "react";
-import "./App.css";
-import { styled } from "styled-components";
-import { FaArrowAltCircleUp, FaBeer } from "react-icons/fa";
-import { react } from '@vitejs/plugin-react';
-import { Tooltip } from "react-tooltip";
+// src/App.tsx
+import React from 'react';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+import AppRoutes from './routes';
+import styled from 'styled-components';
 
-const H1 = styled.h1`
-  font-size: 1.5em;
-
+const AppContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 `;
-function App() {
 
+const AppNav = styled.nav`
+    background-color: #f0f0f0;
+    padding: 10px;
+`;
 
-  return (
-    <>
-    <h3> Lets go for a <FaArrowAltCircleUp color="green" />? </h3>
-    <H1 data-tooltip-id='1234'data-tooltip-content='Inicio'>commit inicial</H1>
-    <Tooltip  place="bottom"   />
-    </>
-  );
-}
+const AppNavUl = styled.ul`
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+`;
+
+const AppContent = styled.div`
+    padding: 20px;
+    flex: 1;
+`;
+
+const App: React.FC = () => {
+    return (
+        <Router>
+            <AppContainer>
+                <AppNav>
+                    <AppNavUl>
+                        <li>
+                            <Link to="/">Dashboard</Link>
+                        </li>
+                        <li>
+                            <Link to="/categories">Categorias</Link>
+                        </li>
+                        <li>
+                            <Link to="/transactions">Transações</Link>
+                        </li>
+                    </AppNavUl>
+                </AppNav>
+                <AppContent>
+                    <AppRoutes />
+                </AppContent>
+            </AppContainer>
+        </Router>
+    );
+};
 
 export default App;
