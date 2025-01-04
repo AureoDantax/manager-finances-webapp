@@ -1,9 +1,13 @@
-// src/services/api.ts
 import axios from 'axios';
 
+
 const api = axios.create({
-    baseURL: 'http://localhost:8085/api', // URL da sua API em produção
+  baseURL: "https://api.managerfinances.tech/api", 
+  timeout: 5000,
+  headers: { 'Content-Type': 'application/json' }
 });
+
+
 
 export const getCategories = async () => {
     try {
@@ -41,7 +45,7 @@ export const createItem = async (item: {nome: string, categoryId: string, valor:
         const response = await api.post('item/create', item);
         return response.data;
     } catch (error) {
-      console.error('Erro ao criar item:', error.message);
+      console.error('Erro ao criar item:', error);
       throw error;
     }
 };
