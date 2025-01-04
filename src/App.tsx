@@ -5,6 +5,10 @@ import AppRoutes from './routes';
 import styled from 'styled-components';
 import GlobalStyle from './assets/globalStyles';
 import Sidebar from './components/Sidebar';
+ import { ThemeProvider } from '@mui/material/styles';
+import { useAppContext } from './contexts/AppContext';
+import { CssBaseline } from '@mui/material';
+
 
 const AppContainer = styled.div`
     display: flex;
@@ -17,16 +21,20 @@ const AppContent = styled.div`
 `;
 
 const App: React.FC = () => {
+    const { theme } = useAppContext();
     return (
-        <Router>
+        <ThemeProvider theme={theme}>
+            <CssBaseline/>
+             <Router>
             <GlobalStyle/>
             <AppContainer>
                 <Sidebar />
                 <AppContent>
                     <AppRoutes />
                 </AppContent>
-            </AppContainer>
-        </Router>
+             </AppContainer>
+          </Router>
+       </ThemeProvider>
     );
 };
 

@@ -1,6 +1,7 @@
 // src/components/Modal.tsx
 import React from 'react';
 import styled from 'styled-components';
+import { useTheme } from '@mui/material/styles';
 
 const ModalOverlay = styled.div`
     position: fixed;
@@ -16,11 +17,12 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-    background-color: white;
+    background-color: ${({ theme }) => theme.palette.background.paper};
     padding: 20px;
     border-radius: 8px;
     max-width: 500px;
     width: 90%;
+    transition: background-color 0.3s;
 `;
 
 const ModalHeader = styled.div`
@@ -32,14 +34,17 @@ const ModalHeader = styled.div`
 
 const ModalTitle = styled.h2`
   font-size: 1.5em;
-  color: #333;
-`
+  color: ${({ theme }) => theme.palette.text.primary};
+  transition: color 0.3s;
+`;
 
 const CloseButton = styled.button`
     background: none;
     border: none;
     font-size: 1.5em;
     cursor: pointer;
+     color: ${({ theme }) => theme.palette.text.primary};
+    transition: color 0.3s;
 `;
 
 interface ModalProps {
@@ -50,21 +55,22 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
-    if (!isOpen) {
-        return null;
-    }
+     const theme = useTheme()
+        if (!isOpen) {
+            return null;
+        }
 
-    return (
-        <ModalOverlay>
-            <ModalContent>
-              <ModalHeader>
-                <ModalTitle>{title}</ModalTitle>
-                <CloseButton onClick={onClose}>×</CloseButton>
-              </ModalHeader>
-              {children}
-            </ModalContent>
-        </ModalOverlay>
-    );
-};
+        return (
+            <ModalOverlay>
+                <ModalContent theme={theme}>
+                  <ModalHeader>
+                    <ModalTitle theme={theme}>{title}</ModalTitle>
+                    <CloseButton onClick={onClose} theme={theme}>×</CloseButton>
+                  </ModalHeader>
+                  {children}
+                </ModalContent>
+            </ModalOverlay>
+        );
+    };
 
-export default Modal;
+    export default Modal;
