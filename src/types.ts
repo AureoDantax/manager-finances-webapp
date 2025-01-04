@@ -10,8 +10,8 @@ export interface Category {
 
 export interface Item {
   id: string;
-  name: string;
-  value: number;
-  categoryId: string;
-  date: string;
+  nome: string;
+  valor: number;
+  categoria: Category;
+  dataRegistro: string;
 }
