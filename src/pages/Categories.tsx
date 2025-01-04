@@ -4,6 +4,7 @@ import { getCategories, createCategory } from '../services/api';
 import { Category } from '../types';
 import styled from 'styled-components';
 import { SketchPicker } from 'react-color';
+import Modal from '../components/Modal';
 
 const CategoriesContainer = styled.div`
     padding: 20px;
@@ -50,6 +51,7 @@ const CategoryInput = styled.input`
     font-size: 1em;
 `;
 
+
 const CategoryButton = styled.button`
     background-color: #007bff;
     color: white;
@@ -65,12 +67,19 @@ const CategoryButton = styled.button`
     }
 `;
 
+ const AddCategoryButton = styled(CategoryButton)`
+   margin-bottom: 20px;
+ `;
+
+
 const Categories: React.FC = () => {
     const [categories, setCategories] = useState<Category[]>([]);
     const [newCategoryName, setNewCategoryName] = useState<string>('');
     const [newCategoryTag, setNewCategoryTag] = useState<string>('');
     const [newCategoryColor, setNewCategoryColor] = useState<string>('#ffffff');
     const [newCategoryIsExpense, setNewCategoryIsExpense] = useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -83,6 +92,14 @@ const Categories: React.FC = () => {
         };
         fetchCategories();
     }, []);
+
+     const handleOpenModal = () => {
+      setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+      setIsModalOpen(false);
+    };
 
     const handleColorChange = (color: any) => {
         setNewCategoryColor(color.hex);
@@ -104,6 +121,7 @@ const Categories: React.FC = () => {
             setNewCategoryIsExpense(false)
             const data = await getCategories();
             setCategories(data);
+             handleCloseModal()
         } catch (error) {
             console.error("Erro ao criar categoria: ", error)
         }
@@ -112,36 +130,39 @@ const Categories: React.FC = () => {
     return (
         <CategoriesContainer>
             <CategoriesHeader>Categorias</CategoriesHeader>
-            <CategoryForm>
-                <CategoryLabel htmlFor='name'>Nome da Categoria</CategoryLabel>
-                <CategoryInput
-                    type="text"
-                    id="name"
-                    value={newCategoryName}
-                    onChange={e => setNewCategoryName(e.target.value)}
-                />
-                <CategoryLabel htmlFor='tag'>Tag da Categoria</CategoryLabel>
-                <CategoryInput
-                    type="text"
-                    id="tag"
-                    value={newCategoryTag}
-                    onChange={e => setNewCategoryTag(e.target.value)}
-                />
-                 <CategoryLabel htmlFor='color'>Cor da Categoria</CategoryLabel>
-                <SketchPicker
-                    color={newCategoryColor}
-                    onChange={handleColorChange}
-                />
-                <label>
-                    <input
-                        type="checkbox"
-                        checked={newCategoryIsExpense}
-                        onChange={e => setNewCategoryIsExpense(e.target.checked)}
-                    />
-                     É despesa?
-                </label>
-                <CategoryButton onClick={handleCreateCategory}>Criar Categoria</CategoryButton>
-            </CategoryForm>
+             <AddCategoryButton onClick={handleOpenModal}>Adicionar Categoria</AddCategoryButton>
+            <Modal title="Criar Categoria" isOpen={isModalOpen} onClose={handleCloseModal}>
+              <CategoryForm onSubmit={handleCreateCategory}>
+                  <CategoryLabel htmlFor='name'>Nome da Categoria</CategoryLabel>
+                  <CategoryInput
+                      type="text"
+                      id="name"
+                      value={newCategoryName}
+                      onChange={e => setNewCategoryName(e.target.value)}
+                  />
+                  <CategoryLabel htmlFor='tag'>Tag da Categoria</CategoryLabel>
+                  <CategoryInput
+                      type="text"
+                      id="tag"
+                      value={newCategoryTag}
+                      onChange={e => setNewCategoryTag(e.target.value)}
+                  />
+                   <CategoryLabel htmlFor='color'>Cor da Categoria</CategoryLabel>
+                   <SketchPicker
+                       color={newCategoryColor}
+                       onChange={handleColorChange}
+                   />
+                    <label>
+                       <input
+                           type="checkbox"
+                           checked={newCategoryIsExpense}
+                           onChange={e => setNewCategoryIsExpense(e.target.checked)}
+                       />
+                        É despesa?
+                    </label>
+                  <CategoryButton type="submit">Criar Categoria</CategoryButton>
+              </CategoryForm>
+            </Modal>
             <CategoryList>
                 {categories.map(category => (
                     <CategoryItem key={category.id}>{category.titulo}</CategoryItem>

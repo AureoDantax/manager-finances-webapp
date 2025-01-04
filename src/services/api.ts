@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8085/api', // URL da sua API em produção
+    baseURL: 'https://api.managerfinances.tech/api', // URL da sua API em produção
 });
 
 export const getCategories = async () => {
@@ -35,8 +35,9 @@ export const getItems = async () => {
     }
 };
 
-export const createItem = async (item: {nome: string, categoryId: string, valor: number}) => {
+export const createItem = async (item: {nome: string, categoryTitle: string, valor: number}) => {
     try {
+      console.log('Item criado:', item);
         const response = await api.post('item/create', item);
         return response.data;
     } catch (error) {

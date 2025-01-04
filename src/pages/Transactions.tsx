@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { getItems, createItem, getCategories } from '../services/api';
 import { Item, Category } from '../types';
 import styled from 'styled-components';
+import Modal from '../components/Modal';
 
 const TransactionsContainer = styled.div`
     padding: 20px;
@@ -26,6 +27,9 @@ const TransactionItem = styled.li`
     border-radius: 8px;
     padding: 10px 15px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `;
 
 const TransactionForm = styled.div`
@@ -41,7 +45,7 @@ const TransactionLabel = styled.label`
     color: #555;
 `;
 
- const TransactionInput = styled.input`
+const TransactionInput = styled.input`
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -57,7 +61,7 @@ const TransactionSelect = styled.select`
     font-size: 1em;
 `;
 
- const TransactionButton = styled.button`
+const TransactionButton = styled.button`
     background-color: #007bff;
     color: white;
     border: none;
@@ -71,6 +75,9 @@ const TransactionSelect = styled.select`
         background-color: #0056b3;
     }
 `;
+  const AddTransactionButton = styled(TransactionButton)`
+     margin-bottom: 20px;
+`;
 
 const Transactions: React.FC = () => {
     const [transactions, setTransactions] = useState<Item[]>([]);
@@ -78,7 +85,7 @@ const Transactions: React.FC = () => {
     const [newTransactionName, setNewTransactionName] = useState<string>('');
     const [newTransactionValue, setNewTransactionValue] = useState<number>(0);
     const [newTransactionCategory, setNewTransactionCategory] = useState<string>('');
-
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     useEffect(() => {
         const fetchTransactions = async () => {
@@ -101,58 +108,80 @@ const Transactions: React.FC = () => {
         fetchCategories();
     }, []);
 
+
+     const handleOpenModal = () => {
+      setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+      setIsModalOpen(false);
+    };
+
+
      const handleCreateTransaction = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            const newTransaction = {
-                nome: newTransactionName,
-                valor: newTransactionValue,
-                categoryId: newTransactionCategory,
-            }
-            await createItem(newTransaction);
-            setNewTransactionName('');
-            setNewTransactionValue(0);
-            setNewTransactionCategory('');
-            const data = await getItems();
-            setTransactions(data);
-        } catch (error) {
-            console.error('Erro ao criar transação:', error);
-        }
-    }
+      e.preventDefault();
+       try {
+           const selectedCategory = categories.find((category) => category.id === newTransactionCategory);
+
+           if(selectedCategory){
+             const newTransaction = {
+                   nome: newTransactionName,
+                   valor: newTransactionValue,
+                   categoryId: selectedCategory.titulo
+               }
+             await createItem(newTransaction);
+               setNewTransactionName('');
+               setNewTransactionValue(0);
+               setNewTransactionCategory('');
+              const data = await getItems();
+                setTransactions(data);
+                handleCloseModal()
+          }
+       } catch (error) {
+        console.error('Erro ao criar transação:', error);
+       }
+     }
+
 
     return (
         <TransactionsContainer>
             <TransactionsHeader>Transações</TransactionsHeader>
-            <TransactionForm>
-                <TransactionLabel htmlFor="name">Nome da Transação</TransactionLabel>
-                <TransactionInput
-                    type="text"
-                    id="name"
-                    value={newTransactionName}
-                    onChange={e => setNewTransactionName(e.target.value)}
-                />
-                <TransactionLabel htmlFor="value">Valor da Transação</TransactionLabel>
-                <TransactionInput
-                    type="number"
-                    id="value"
-                    value={newTransactionValue}
-                    onChange={e => setNewTransactionValue(Number(e.target.value))}
-                />
+            <AddTransactionButton onClick={handleOpenModal}>Adicionar Transação</AddTransactionButton>
+            <Modal title="Criar Transação" isOpen={isModalOpen} onClose={handleCloseModal}>
+              <TransactionForm onSubmit={handleCreateTransaction}>
+                  <TransactionLabel htmlFor="name">Nome da Transação</TransactionLabel>
+                  <TransactionInput
+                      type="text"
+                      id="name"
+                      value={newTransactionName}
+                      onChange={e => setNewTransactionName(e.target.value)}
+                  />
+                   <TransactionLabel htmlFor="value">Valor da Transação</TransactionLabel>
+                  <TransactionInput
+                     type="number"
+                     id="value"
+                     value={newTransactionValue}
+                      onChange={e => setNewTransactionValue(Number(e.target.value))}
+                   />
                 <TransactionLabel htmlFor="category">Categoria da Transação</TransactionLabel>
                 <TransactionSelect
-                    id="category"
-                    onChange={e => setNewTransactionCategory(e.target.value)}
-                >
+                        id="category"
+                         onChange={e => setNewTransactionCategory(e.target.value)}
+                    >
                      <option value="">Selecione uma categoria</option>
-                    {categories.map(category => (
-                        <option key={category.id} value={category.id}>{category.titulo}</option>
-                    ))}
+                     {categories.map(category => (
+                         <option key={category.id} value={category.id}>{category.titulo}</option>
+                      ))}
                 </TransactionSelect>
-                <TransactionButton onClick={handleCreateTransaction}>Criar Transação</TransactionButton>
-            </TransactionForm>
+                    <TransactionButton type='submit'>Criar Transação</TransactionButton>
+              </TransactionForm>
+            </Modal>
             <TransactionList>
                 {transactions.map(transaction => (
-                    <TransactionItem key={transaction.id}>{transaction.nome}</TransactionItem>
+                    <TransactionItem key={transaction.id}>
+                        <span>{transaction.nome}</span>
+                        <span>{transaction.categoria.titulo}</span>
+                    </TransactionItem>
                 ))}
             </TransactionList>
         </TransactionsContainer>
