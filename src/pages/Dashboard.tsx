@@ -87,7 +87,7 @@ const Dashboard: React.FC = () => {
           <BalanceCard>
             <BalanceTitle>Saldo</BalanceTitle>
             <BalanceValue>
-              R$ {formatValue(balances)}
+              {formatValue(balances)}
             </BalanceValue>
           </BalanceCard>
         </BalanceContainer>
