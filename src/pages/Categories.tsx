@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/pages/Categories.tsx
 import React, { useState, useEffect } from 'react';
 import { getCategories, createCategory } from '../services/api';
@@ -9,11 +10,8 @@ import {
   ListItem,
   TextField,
   Button,
-  FormControl,
   FormControlLabel,
   Switch,
-  Select,
-  MenuItem,
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { SketchPicker } from 'react-color';
@@ -57,10 +55,6 @@ const CategoryForm = styled('form')({
   maxWidth: '300px',
   marginBottom: '20px',
 });
-
-const CategorySelect = styled(Select)({
-    marginBottom: '10px'
-})
 
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);

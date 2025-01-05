@@ -1,4 +1,4 @@
-// src/pages/Transactions.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { getItems, createItem, getCategories } from '../services/api';
 import { Item, Category } from '../types';
@@ -51,10 +51,12 @@ const TransactionForm = styled('form')({
     marginBottom: '20px',
 });
 
-const AddTransactionButton = styled(Button)`
-    marginBottom: 20px;
-    color: #ffffff;
-`;
+const AddTransactionButton = styled(Button)({
+    marginBottom: '20px',
+    color: '#ffffff',
+    
+});
+
 
 const Transactions: React.FC = () => {
     const [transactions, setTransactions] = useState<Item[]>([]);
