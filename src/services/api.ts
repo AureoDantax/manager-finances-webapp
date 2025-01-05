@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Category } from '../types';
 
 
 const api = axios.create({
@@ -39,7 +40,7 @@ export const getItems = async () => {
     }
 };
 
-export const createItem = async (item: {nome: string, categoryId: string, valor: number}) => {
+export const createItem = async (item: {nome: string, categoria: Category, valor: number, dataregistro:Date}) => {
     try {
       console.log('Item criado:', item);
         const response = await api.post('item/create', item);
