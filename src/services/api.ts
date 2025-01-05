@@ -40,7 +40,7 @@ export const getItems = async () => {
     }
 };
 
-export const createItem = async (item: {nome: string, categoria: Category, valor: number, dataregistro:Date}) => {
+export const createItem = async (item: {nome: string, categoria: Category, valor: number, dataRegistro:string}) => {
     try {
       console.log('Item criado:', item);
         const response = await api.post('item/create', item);

@@ -49,7 +49,7 @@ const RecentTransactionsTitle = styled.h2`
 `;
 
 const Dashboard: React.FC = () => {
-  const [balance, setBalance] = useState<{ receita: number, despesa: number, total: number } | null>(null);
+  const [balance, setBalance] = useState<{ receita: number, despesa: number, balance: number } | null>(null);
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -87,7 +87,7 @@ const Dashboard: React.FC = () => {
           <BalanceCard>
             <BalanceTitle>Saldo</BalanceTitle>
             <BalanceValue>
-              R$ {formatValue(balance)}
+              R$ {formatValue(balance.balance)}
             </BalanceValue>
           </BalanceCard>
         </BalanceContainer>

@@ -1,5 +1,5 @@
 // src/index.tsx
-import React, { StrictMode } from 'react';
+import  { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { AppProvider } from './contexts/AppContext'; // Importe o AppProvider
