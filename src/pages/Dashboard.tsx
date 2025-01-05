@@ -49,13 +49,13 @@ const RecentTransactionsTitle = styled.h2`
 `;
 
 const Dashboard: React.FC = () => {
-  const [balance, setBalance] = useState<{ receita: number, despesa: number, balance: number } | null>(null);
+  const [balances, setBalances] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchBalance = async () => {
       try {
         const data = await getBalance();
-        setBalance(data);
+        setBalances(data);
       } catch (error) {
         console.error('Erro ao buscar balanço:', error);
       }
@@ -64,30 +64,30 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const formatValue = (value: number | undefined) => {
-      if(value === undefined ){
-          return '0,00';
-      }
-      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    if (value === undefined) {
+      return '0,00';
+    }
+    return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   };
 
   return (
     <DashboardContainer>
       <DashboardHeader>Dashboard</DashboardHeader>
 
-      {balance ? (
+      {balances ? (
         <BalanceContainer>
           <BalanceCard>
-            <BalanceTitle>Receita</BalanceTitle>
-            <BalanceValue>R$ {formatValue(balance.receita)}</BalanceValue>
+            <BalanceTitle>Receitas</BalanceTitle>
+            <BalanceValue>R$ </BalanceValue>
           </BalanceCard>
           <BalanceCard>
-            <BalanceTitle>Despesa</BalanceTitle>
-            <BalanceValue>R$ {formatValue(balance.despesa)}</BalanceValue>
+            <BalanceTitle>Despesas</BalanceTitle>
+            <BalanceValue>R$ </BalanceValue>
           </BalanceCard>
           <BalanceCard>
             <BalanceTitle>Saldo</BalanceTitle>
             <BalanceValue>
-              R$ {formatValue(balance.balance)}
+              R$ {formatValue(balances)}
             </BalanceValue>
           </BalanceCard>
         </BalanceContainer>
