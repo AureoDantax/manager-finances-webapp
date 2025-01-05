@@ -56,7 +56,6 @@ const Dashboard: React.FC = () => {
       try {
         const data = await getBalance();
         setBalance(data);
-        console.log('Balanço:', balance);
       } catch (error) {
         console.error('Erro ao buscar balanço:', error);
       }
