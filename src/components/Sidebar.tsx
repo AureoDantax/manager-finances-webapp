@@ -1,10 +1,8 @@
 // src/components/Sidebar.tsx
+import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useAppContext } from '../contexts/AppContext';
-import { Switch, FormControlLabel, Box } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 
 const SidebarContainer = styled.aside`
     background-color: ${(props) => props.theme.palette.background.paper};

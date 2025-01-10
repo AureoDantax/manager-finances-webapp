@@ -1,5 +1,4 @@
 // src/App.tsx
-import { CssBaseline } from '@mui/material';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,7 +6,6 @@ import AppTheme from './AppTheme';
 import GlobalStyle from './assets/globalStyles';
 import Sidebar from './components/Sidebar';
 import AppRoutes from './routes';
-import ColorModeSelect from './theme/ColorModeSelect';
 
 
 const AppContainer = styled.div`

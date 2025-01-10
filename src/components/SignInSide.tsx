@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import AppTheme from '../AppTheme';
 import ColorModeSelect from '../theme/ColorModeSelect';
 import Content from './Content';
-import SignInCard from './SigninCard';
+import SignInCard from './SignInCard';
 
 export default function SignInSide(props: { disableCustomTheme?: boolean }) {
   return (
