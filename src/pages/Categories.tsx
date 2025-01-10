@@ -18,6 +18,7 @@ import { SketchPicker } from 'react-color';
 import Modal from '../components/Modal';
 import Notification from '../components/Notification';
 import { motion } from 'framer-motion'
+import Sidebar from '../components/Sidebar';
 
 const CategoriesContainer = styled(Box)({
   padding: '20px',
@@ -122,7 +123,9 @@ const Categories: React.FC = () => {
   };
 
   return (
+    <>
     <CategoriesContainer>
+      
       <Notification
         message={notificationMessage}
         isVisible={isNotificationVisible}
@@ -179,6 +182,7 @@ const Categories: React.FC = () => {
         ))}
       </CategoryList>
     </CategoriesContainer>
+    </>
   );
 };
 

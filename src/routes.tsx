@@ -4,6 +4,9 @@ import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Categories from './pages/Categories';
 import Transactions from './pages/Transactions';
+import SignUp from './components/SignUp';
+
+import SignInSide from './components/SignInSide';
 
 const AppRoutes: React.FC = () => {
     return (
@@ -11,6 +14,8 @@ const AppRoutes: React.FC = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/transactions" element={<Transactions />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/sign-in" element={<SignInSide />} />
         </Routes>
     );
 };

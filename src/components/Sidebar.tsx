@@ -33,7 +33,6 @@ const SidebarLink = styled(Link)`
 `;
 
 const Sidebar: React.FC = () => {
-  const { toggleTheme } = useAppContext();
   const theme = useTheme();
 
   return (
@@ -43,12 +42,6 @@ const Sidebar: React.FC = () => {
         <SidebarLink to="/categories" theme={theme}>Categorias</SidebarLink>
         <SidebarLink to="/transactions" theme={theme}>Transações</SidebarLink>
       </SidebarNav>
-      <Box sx={{ mt: 2 }}>
-        <FormControlLabel
-          control={<Switch color="primary" onChange={toggleTheme} checked={theme.palette.mode === 'dark'} />}
-          label="Modo Escuro"
-        />
-      </Box>
     </SidebarContainer>
   );
 };

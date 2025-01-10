@@ -1,13 +1,13 @@
 // src/App.tsx
+import { CssBaseline } from '@mui/material';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import AppRoutes from './routes';
 import styled from 'styled-components';
+import AppTheme from './AppTheme';
 import GlobalStyle from './assets/globalStyles';
 import Sidebar from './components/Sidebar';
- import { ThemeProvider } from '@mui/material/styles';
-import { useAppContext } from './contexts/AppContext';
-import { CssBaseline } from '@mui/material';
+import AppRoutes from './routes';
+import ColorModeSelect from './theme/ColorModeSelect';
 
 
 const AppContainer = styled.div`
@@ -20,21 +20,21 @@ const AppContent = styled.div`
     flex: 1;
 `;
 
-const App: React.FC = () => {
-    const { theme } = useAppContext();
+const App: React.FC = (props: { disableCustomTheme?: boolean}) => {
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline/>
-             <Router>
-            <GlobalStyle/>
-            <AppContainer>
-                <Sidebar />
-                <AppContent>
-                    <AppRoutes />
-                </AppContent>
-             </AppContainer>
-          </Router>
-       </ThemeProvider>
+        <AppTheme {...props}>
+            
+            <Router>
+                <GlobalStyle />
+                <AppContainer>
+                    <Sidebar />
+                    <AppContent>
+                        <AppRoutes />
+                    </AppContent>
+                </AppContainer>
+            </Router>
+        </AppTheme >
+
     );
 };
 
