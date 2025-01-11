@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/pages/Categories.tsx
 import React, { useState, useEffect } from 'react';
 import { getCategories, createCategory } from '../services/api';
 import { Category } from '../types';
@@ -18,7 +17,6 @@ import { SketchPicker } from 'react-color';
 import Modal from '../components/Modal';
 import Notification from '../components/Notification';
 import { motion } from 'framer-motion'
-import Sidebar from '../components/Sidebar';
 
 const CategoriesContainer = styled(Box)({
   padding: '20px',

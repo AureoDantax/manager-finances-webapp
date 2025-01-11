@@ -1,4 +1,3 @@
-// src/pages/Dashboard.tsx
 import React, { useState, useEffect } from 'react';
 import { getBalance } from '../services/api';
 import styled from 'styled-components';
