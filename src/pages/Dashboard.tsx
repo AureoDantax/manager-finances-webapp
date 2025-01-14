@@ -9,7 +9,7 @@ const DashboardContainer = styled.div`
 const DashboardHeader = styled.h1`
   font-size: 2em;
   margin-bottom: 20px;
-  color: #333;
+  color: #a09b9b;
 `;
 
 const BalanceContainer = styled.div`
@@ -24,17 +24,19 @@ const BalanceCard = styled.div`
   border-radius: 8px;
   padding: 20px;
   text-align: center;
+  min-width: 220px;
+
 `;
 
 const BalanceTitle = styled.h2`
   font-size: 1.2em;
-  color: #555;
+  color: #444343;
 `;
 
 const BalanceValue = styled.p`
   font-size: 1.5em;
   font-weight: bold;
-  color: #333;
+  color: #1f1e1e;
 `;
 
 const RecentTransactions = styled.div`
@@ -43,7 +45,7 @@ const RecentTransactions = styled.div`
 
 const RecentTransactionsTitle = styled.h2`
     font-size: 1.5em;
-    color: #555;
+    color: #a09b9b;
     margin-bottom: 10px;
 `;
 
