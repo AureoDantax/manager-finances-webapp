@@ -48,7 +48,7 @@ const RecentTransactionsTitle = styled.h2`
 `;
 
 const Dashboard: React.FC = () => {
-  const [balances, setBalances] = useState<number | null>(null);
+  const [balance, setBalances] = useState<{revenues:number,expenses:number,amount:number} | null>(null);
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -73,20 +73,20 @@ const Dashboard: React.FC = () => {
     <DashboardContainer>
       <DashboardHeader>Dashboard</DashboardHeader>
 
-      {balances ? (
+      {balance ? (
         <BalanceContainer>
           <BalanceCard>
             <BalanceTitle>Receitas</BalanceTitle>
-            <BalanceValue>R$ </BalanceValue>
+            <BalanceValue>{formatValue(balance.revenues)} </BalanceValue>
           </BalanceCard>
           <BalanceCard>
             <BalanceTitle>Despesas</BalanceTitle>
-            <BalanceValue>R$ </BalanceValue>
+            <BalanceValue>{formatValue(balance.expenses)}</BalanceValue>
           </BalanceCard>
           <BalanceCard>
             <BalanceTitle>Saldo</BalanceTitle>
             <BalanceValue>
-              {formatValue(balances)}
+              {formatValue(balance.amount)}
             </BalanceValue>
           </BalanceCard>
         </BalanceContainer>
