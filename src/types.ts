@@ -4,14 +4,14 @@ export interface Category {
     id: string;
     name: string;
     tag: string;
-    cor: string;
-    despesa: boolean;
+    color: string;
+    expense: boolean;
 }
 
 export interface Item {
   id: string;
   name: string;
-  valor: number;
-  categoria: Category;
-  dataRegistro: string;
+  value: number;
+  category: Category;
+  registerDate: string;
 }

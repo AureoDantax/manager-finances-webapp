@@ -173,7 +173,7 @@ const Categories: React.FC = () => {
       <CategoryList>
         {categories.map((category) => (
              <motion.div whileHover={{ scale: 1.05}}>
-            <CategoryItem key={category.id} categoryColor={category.cor}>
+            <CategoryItem key={category.id} categoryColor={category.color}>
               <Typography variant="body1">{category.name}</Typography>
             </CategoryItem>
             </motion.div>
