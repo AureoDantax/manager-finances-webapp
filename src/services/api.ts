@@ -12,7 +12,7 @@ const api = axios.create({
 
 export const getCategories = async () => {
     try {
-        const response = await api.get('/categoria/list');
+        const response = await api.get('/categories');
         return response.data;
     } catch (error) {
         console.error('Erro ao buscar categorias:', error);
@@ -22,7 +22,7 @@ export const getCategories = async () => {
 
 export const createCategory = async (category: {titulo: string}) => {
   try {
-    const response = await api.post('categoria/create', category);
+    const response = await api.post('categories', category);
     return response.data;
   } catch (error) {
     console.error('Erro ao criar categoria:', error);
@@ -32,7 +32,7 @@ export const createCategory = async (category: {titulo: string}) => {
 
 export const getItems = async () => {
     try {
-        const response = await api.get('/item/list');
+        const response = await api.get('/transactions');
         return response.data;
     } catch (error) {
         console.error('Erro ao buscar itens:', error);
@@ -43,7 +43,7 @@ export const getItems = async () => {
 export const createItem = async (item: {nome: string, categoria: Category, valor: number, dataRegistro:string}) => {
     try {
       console.log('Item criado:', item);
-        const response = await api.post('item/create', item);
+        const response = await api.post('transactions', item);
         return response.data;
     } catch (error) {
       console.error('Erro ao criar item:', error);
@@ -53,7 +53,7 @@ export const createItem = async (item: {nome: string, categoria: Category, valor
 
 export const getBalance = async () => {
   try {
-    const response = await api.get('/balanco');
+    const response = await api.get('/balance');
     return response.data
   } catch (error) {
     console.error('Erro ao buscar o balanço:', error);
