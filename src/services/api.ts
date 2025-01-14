@@ -20,7 +20,7 @@ export const getCategories = async () => {
     }
 };
 
-export const createCategory = async (category: {title: string}) => {
+export const createCategory = async (category: {name: string}) => {
   try {
     const response = await api.post('categories', category);
     return response.data;

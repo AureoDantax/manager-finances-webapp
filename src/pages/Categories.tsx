@@ -97,7 +97,7 @@ const Categories: React.FC = () => {
     e.preventDefault();
     try {
       const newCategory = {
-        title: newCategoryName,
+        name: newCategoryName,
         tag: newCategoryTag,
         color: newCategoryColor,
         expense: newCategoryIsExpense,
