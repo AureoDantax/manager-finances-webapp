@@ -182,7 +182,7 @@ const Transactions: React.FC = () => {
                 {transactions.map((transaction) => (
                     <motion.div whileHover={{ scale: 1.05 }}>
                         <TransactionItem key={transaction.id}>
-                            <Typography variant="body1">{transaction.nome}</Typography>
+                            <Typography variant="body1">{transaction.name}</Typography>
                             <Typography variant="body2">{transaction.categoria.name}</Typography>
                         </TransactionItem>
                     </motion.div>

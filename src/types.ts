@@ -10,7 +10,7 @@ export interface Category {
 
 export interface Item {
   id: string;
-  nome: string;
+  name: string;
   valor: number;
   categoria: Category;
   dataRegistro: string;
