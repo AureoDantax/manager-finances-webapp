@@ -20,7 +20,7 @@ export const getCategories = async () => {
     }
 };
 
-export const createCategory = async (category: {titulo: string}) => {
+export const createCategory = async (category: {title: string}) => {
   try {
     const response = await api.post('categories', category);
     return response.data;
@@ -40,7 +40,7 @@ export const getItems = async () => {
     }
 };
 
-export const createItem = async (item: {nome: string, categoria: Category, valor: number, dataRegistro:string}) => {
+export const createItem = async (item: {name: string, category: Category, value: number, registerDate:string}) => {
     try {
       console.log('Item criado:', item);
         const response = await api.post('transactions', item);

@@ -97,10 +97,10 @@ const Categories: React.FC = () => {
     e.preventDefault();
     try {
       const newCategory = {
-        titulo: newCategoryName,
+        title: newCategoryName,
         tag: newCategoryTag,
-        cor: newCategoryColor,
-        despesa: newCategoryIsExpense,
+        color: newCategoryColor,
+        expense: newCategoryIsExpense,
       };
       await createCategory(newCategory);
        setNewCategoryName('');

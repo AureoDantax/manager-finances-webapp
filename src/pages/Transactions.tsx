@@ -108,10 +108,10 @@ const Transactions: React.FC = () => {
             const selectedCategory = categories.find((category) => category.id === newTransactionCategory);
             if (selectedCategory) {
                 const newTransaction = {
-                    nome: newTransactionName,
-                    valor: newTransactionValue,
-                    categoria: selectedCategory,
-                    dataRegistro: new Date().toISOString().split('T')[0],
+                    name: newTransactionName,
+                    value: newTransactionValue,
+                    category: selectedCategory,
+                    registerDate: new Date().toISOString().split('T')[0],
                 };
                 await createItem(newTransaction);
                 setNewTransactionName('');
