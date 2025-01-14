@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react';
-import { getItems, createItem, getCategories } from '../services/api';
-import { Item, Category } from '../types';
 import {
     Box,
-    Typography,
+    Button,
     List,
     ListItem,
-    TextField,
-    Button,
-    Select,
     MenuItem,
+    Select,
+    TextField,
+    Typography,
 } from '@mui/material';
 import { styled } from '@mui/system';
+import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import Modal from '../components/Modal';
 import Notification from '../components/Notification';
-import { motion } from 'framer-motion';
+import { createItem, getCategories, getItems } from '../services/api';
+import { Category, Item } from '../types';
 
 const TransactionsContainer = styled(Box)({
     padding: '20px',
@@ -169,7 +169,7 @@ const Transactions: React.FC = () => {
                         <MenuItem value="">Selecione uma categoria</MenuItem>
                         {categories.map((category) => (
                             <MenuItem key={category.id} value={category.id}>
-                                {category.titulo}
+                                {category.name}
                             </MenuItem>
                         ))}
                     </Select>
@@ -183,7 +183,7 @@ const Transactions: React.FC = () => {
                     <motion.div whileHover={{ scale: 1.05 }}>
                         <TransactionItem key={transaction.id}>
                             <Typography variant="body1">{transaction.nome}</Typography>
-                            <Typography variant="body2">{transaction.categoria.titulo}</Typography>
+                            <Typography variant="body2">{transaction.categoria.name}</Typography>
                         </TransactionItem>
                     </motion.div>
                 ))}

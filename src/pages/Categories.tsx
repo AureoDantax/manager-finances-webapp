@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react';
-import { getCategories, createCategory } from '../services/api';
-import { Category } from '../types';
 import {
   Box,
-  Typography,
-  List,
-  ListItem,
-  TextField,
   Button,
   FormControlLabel,
+  List,
+  ListItem,
   Switch,
+  TextField,
+  Typography,
 } from '@mui/material';
 import { styled } from '@mui/system';
+import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import Modal from '../components/Modal';
 import Notification from '../components/Notification';
-import { motion } from 'framer-motion'
+import { createCategory, getCategories } from '../services/api';
+import { Category } from '../types';
 
 const CategoriesContainer = styled(Box)({
   padding: '20px',
@@ -174,7 +174,7 @@ const Categories: React.FC = () => {
         {categories.map((category) => (
              <motion.div whileHover={{ scale: 1.05}}>
             <CategoryItem key={category.id} categoryColor={category.cor}>
-              <Typography variant="body1">{category.titulo}</Typography>
+              <Typography variant="body1">{category.name}</Typography>
             </CategoryItem>
             </motion.div>
         ))}

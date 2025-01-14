@@ -2,7 +2,7 @@
 
 export interface Category {
     id: string;
-    titulo: string;
+    name: string;
     tag: string;
     cor: string;
     despesa: boolean;
