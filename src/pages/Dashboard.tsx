@@ -64,7 +64,7 @@ const Dashboard: React.FC = () => {
     fetchBalance();
   }, []);
 
-  const formatValue = (value: number | undefined) => {
+   const formatValue = (value: number | undefined) => {
     if (value === undefined) {
       return '0,00';
     }

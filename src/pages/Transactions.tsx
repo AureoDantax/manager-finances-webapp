@@ -183,7 +183,7 @@ const Transactions: React.FC = () => {
                     <motion.div whileHover={{ scale: 1.05 }}>
                         <TransactionItem key={transaction.id}>
                             <Typography variant="body1">{transaction.name}</Typography>
-                            <Typography variant="body2">{transaction.value}</Typography>
+                            <Typography variant="body2">{transaction.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</Typography>
                         </TransactionItem>
                     </motion.div>
                 ))}
