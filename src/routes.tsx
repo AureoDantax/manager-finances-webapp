@@ -11,11 +11,12 @@ import SignInSide from './components/SignInSide';
 const AppRoutes: React.FC = () => {
     return (
         <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard />}
+                children="/categories" />
             <Route path="/categories" element={<Categories />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/sign-in" element={<SignInSide />} />
+            <Route path="/login" element={<SignInSide />} />
         </Routes>
     );
 };
