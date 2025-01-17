@@ -4,8 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import styled from 'styled-components';
 import AppTheme from './AppTheme';
 import GlobalStyle from './assets/globalStyles';
-import Sidebar from './components/Sidebar';
-import AppRoutes from './routes';
+import MainContent from './routes';
 
 
 const AppContainer = styled.div`
@@ -24,10 +23,9 @@ const App: React.FC = (props: { disableCustomTheme?: boolean}) => {
             
             <Router>
                 <GlobalStyle />
-                <AppContainer>
-                    <Sidebar />
+                <AppContainer> 
                     <AppContent>
-                        <AppRoutes />
+                        <MainContent />
                     </AppContent>
                 </AppContainer>
             </Router>

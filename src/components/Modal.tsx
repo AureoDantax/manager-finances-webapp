@@ -1,7 +1,8 @@
 // src/components/Modal.tsx
+import { Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import styled from 'styled-components';
-import { useTheme } from '@mui/material/styles';
 
 const ModalOverlay = styled.div`
     position: fixed;
@@ -55,22 +56,25 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
-     const theme = useTheme()
-        if (!isOpen) {
-            return null;
-        }
+    const theme = useTheme()
+    if (!isOpen) {
+        return null;
+    }
 
-        return (
-            <ModalOverlay>
-                <ModalContent theme={theme}>
-                  <ModalHeader>
-                    <ModalTitle theme={theme}>{title}</ModalTitle>
+    return (
+        <ModalOverlay>
+            <ModalContent theme={theme}>
+                <ModalHeader>
+                    <ModalTitle theme={theme}>
+                        <Typography variant="h6" component="h2" sx={{ textAlign: 'right', marginBottom: '0px' }}>
+                        {title}
+                    </Typography></ModalTitle>
                     <CloseButton onClick={onClose} theme={theme}>×</CloseButton>
-                  </ModalHeader>
-                  {children}
-                </ModalContent>
-            </ModalOverlay>
-        );
-    };
+                </ModalHeader>
+                {children}
+            </ModalContent>
+        </ModalOverlay>
+    );
+};
 
-    export default Modal;
+export default Modal;

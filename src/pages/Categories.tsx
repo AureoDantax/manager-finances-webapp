@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import {
   Box,
   Button,
@@ -20,27 +21,27 @@ import { Category } from '../types';
 
 const CategoriesContainer = styled(Box)({
   padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center'
 });
 
 const CategoryList = styled(List)({
   marginBottom: '20px',
   width: '100%',
-    maxWidth: '600px',
+  maxWidth: '600px',
 });
 
-const CategoryItem = styled(ListItem)<{ categoryColor?: string }>(({categoryColor}) => ({
+const CategoryItem = styled(ListItem)<{ categoryColor?: string }>(({ categoryColor }) => ({
   backgroundColor: categoryColor,
   border: '1px solid #eee',
   borderRadius: '8px',
   padding: '10px 15px',
   marginBottom: '10px',
-   '& .MuiTypography-root':{
-        color: 'white',
-        fontWeight: 'bold',
-    }
+  '& .MuiTypography-root': {
+    color: 'white',
+    fontWeight: 'bold',
+  }
 }));
 
 const AddCategoryButton = styled(Button)`
@@ -64,7 +65,7 @@ const Categories: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
-    const [notificationType, setNotificationType] = useState< 'success' | 'error'>('success');
+  const [notificationType, setNotificationType] = useState<'success' | 'error'>('success');
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -103,83 +104,84 @@ const Categories: React.FC = () => {
         expense: newCategoryIsExpense,
       };
       await createCategory(newCategory);
-       setNewCategoryName('');
-        setNewCategoryTag('');
-       setNewCategoryColor('#ffffff');
+      setNewCategoryName('');
+      setNewCategoryTag('');
+      setNewCategoryColor('#ffffff');
       setNewCategoryIsExpense(false)
       const data = await getCategories();
       setCategories(data);
       handleCloseModal();
-       setNotificationMessage("Categoria criada com sucesso!");
-       setNotificationType('success');
-     setIsNotificationVisible(true);
+      setNotificationMessage("Categoria criada com sucesso!");
+      setNotificationType('success');
+      setIsNotificationVisible(true);
     } catch (error: any) {
       setNotificationMessage(`Erro ao criar categoria: ${error.message}`);
-     setNotificationType('error');
-        setIsNotificationVisible(true);
+      setNotificationType('error');
+      setIsNotificationVisible(true);
     }
   };
 
   return (
     <>
-    <CategoriesContainer>
-      
-      <Notification
-        message={notificationMessage}
-        isVisible={isNotificationVisible}
-        onClose={handleCloseNotification}
+      <CategoriesContainer>
+
+        <Notification
+          message={notificationMessage}
+          isVisible={isNotificationVisible}
+          onClose={handleCloseNotification}
           type={notificationType}
-      />
-      <Typography variant="h4" component="h1" sx={{ marginBottom: '20px' }}>
-        Categorias
-      </Typography>
-       <AddCategoryButton  variant="contained" color="primary" onClick={handleOpenModal}>Adicionar Categoria</AddCategoryButton>
-      <Modal title="Criar Categoria" isOpen={isModalOpen} onClose={handleCloseModal}>
-        <CategoryForm onSubmit={handleCreateCategory}>
-          <TextField
-            label="Nome da Categoria"
-            value={newCategoryName}
-            onChange={(e) => setNewCategoryName(e.target.value)}
-            sx={{ marginBottom: '10px' }}
-          />
+        />
+        <Typography variant="h4" component="h1" sx={{ marginBottom: '20px' }}>
+          Categorias
+        </Typography>
+        <AddCategoryButton variant="contained" color="secondary" onClick={handleOpenModal} endIcon={<AddBoxIcon />}>ADICIONAR CATEGORIA</AddCategoryButton>
+        <Modal title="Criar Categoria" isOpen={isModalOpen} onClose={handleCloseModal} >
+
+          <CategoryForm onSubmit={handleCreateCategory}>
             <TextField
-             label="Tag da Categoria"
-            value={newCategoryTag}
-            onChange={(e) => setNewCategoryTag(e.target.value)}
-            sx={{ marginBottom: '10px' }}
-          />
-          <Box sx={{marginBottom: '10px'}}>
-            <Typography variant="subtitle1" sx={{marginBottom: '5px'}}>Cor da Categoria</Typography>
-             <SketchPicker
-            color={newCategoryColor}
-             onChange={handleColorChange}
-               />
-          </Box>
+              label="Nome da Categoria"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              sx={{ marginBottom: '20px' }}
+            />
+            <TextField
+              label="Tag da Categoria"
+              value={newCategoryTag}
+              onChange={(e) => setNewCategoryTag(e.target.value)}
+              sx={{ marginBottom: '10px' }}
+            />
+            <Box sx={{ marginBottom: '10px' }}>
+              <Typography variant="subtitle1" sx={{ marginBottom: '5px' }}>Cor da Categoria</Typography>
+              <SketchPicker
+                color={newCategoryColor}
+                onChange={handleColorChange}
+              />
+            </Box>
             <FormControlLabel
               control={
-                  <Switch
-                      checked={newCategoryIsExpense}
-                      onChange={(e) => setNewCategoryIsExpense(e.target.checked)}
-                      color="primary"
-                  />
-               }
+                <Switch
+                  checked={newCategoryIsExpense}
+                  onChange={(e) => setNewCategoryIsExpense(e.target.checked)}
+                  color="primary"
+                />
+              }
               label="É despesa?"
             />
-            <Button type="submit" variant="contained" color="primary">
-              Criar Categoria
-           </Button>
-        </CategoryForm>
-      </Modal>
-      <CategoryList>
-        {categories.map((category) => (
-             <motion.div whileHover={{ scale: 1.05}}>
-            <CategoryItem key={category.id} categoryColor={category.color}>
-              <Typography variant="body1">{category.name}</Typography>
-            </CategoryItem>
+            <Button type="submit" variant="contained" color="success" >
+              CONCLUIR
+            </Button>
+          </CategoryForm>
+        </Modal>
+        <CategoryList>
+          {categories.map((category) => (
+            <motion.div whileHover={{ scale: 1.05 }}>
+              <CategoryItem key={category.id} categoryColor={category.color}>
+                <Typography variant="body1">{category.name}</Typography>
+              </CategoryItem>
             </motion.div>
-        ))}
-      </CategoryList>
-    </CategoriesContainer>
+          ))}
+        </CategoryList>
+      </CategoriesContainer>
     </>
   );
 };

@@ -10,6 +10,7 @@ import {
     Typography,
 } from '@mui/material';
 import { styled } from '@mui/system';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import Modal from '../components/Modal';
@@ -54,7 +55,7 @@ const TransactionForm = styled('form')({
 const AddTransactionButton = styled(Button)({
     marginBottom: '20px',
     color: '#ffffff',
-    
+
 });
 
 
@@ -142,8 +143,8 @@ const Transactions: React.FC = () => {
             <Typography variant="h4" component="h1" sx={{ marginBottom: '20px' }}>
                 Transações
             </Typography>
-            <AddTransactionButton variant="contained" color="primary" onClick={handleOpenModal}>
-                Adicionar Transação
+            <AddTransactionButton variant="contained" color="secondary" onClick={handleOpenModal} endIcon={<AddBoxIcon />}>
+                ADICIONAR TRANSAÇÃO
             </AddTransactionButton>
             <Modal title="Criar Transação" isOpen={isModalOpen} onClose={handleCloseModal}>
                 <TransactionForm onSubmit={handleCreateTransaction}>
@@ -173,9 +174,8 @@ const Transactions: React.FC = () => {
                             </MenuItem>
                         ))}
                     </Select>
-                    <Button type="submit" variant="contained" color="primary">
-                        Criar Transação
-                    </Button>
+                    <Button type="submit" variant="contained" color="success">
+                        SALVAR                    </Button>
                 </TransactionForm>
             </Modal>
             <TransactionList>
