@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import AppTheme from './AppTheme';
 import GlobalStyle from './assets/globalStyles';
 import MainContent from './routes';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 
 const AppContainer = styled.div`
@@ -17,19 +18,20 @@ const AppContent = styled.div`
     flex: 1;
 `;
 
-const App: React.FC = (props: { disableCustomTheme?: boolean}) => {
+const App: React.FC = (props: { disableCustomTheme?: boolean }) => {
     return (
-        <AppTheme {...props}>
-            
-            <Router>
-                <GlobalStyle />
-                <AppContainer> 
-                    <AppContent>
-                        <MainContent />
-                    </AppContent>
-                </AppContainer>
-            </Router>
-        </AppTheme >
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID} >
+            <AppTheme {...props}>
+                <Router>
+                    <GlobalStyle />
+                    <AppContainer>
+                        <AppContent>
+                            <MainContent />
+                        </AppContent>
+                    </AppContainer>
+                </Router>
+            </AppTheme >
+        </GoogleOAuthProvider>
 
     );
 };

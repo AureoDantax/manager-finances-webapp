@@ -1,14 +1,12 @@
 // src/routes.tsx
 import React from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
 import Categories from './pages/Categories';
+import Dashboard from './pages/Dashboard';
+import SignUp from './pages/SignUp';
 import Transactions from './pages/Transactions';
-import SignUp from './components/SignUp';
-
-import SignInSide from './components/SignInSide';
 import Sidebar from './components/Sidebar';
-
+import SignInSide from './pages/SignInSide';
 const MainContent: React.FC = () => {
     const location = useLocation();
     const hideSidebar = location.pathname === '/LOGIN' ||location.pathname === '/login' || location.pathname === '/sign-up';

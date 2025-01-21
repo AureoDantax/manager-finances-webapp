@@ -1,9 +1,9 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import Stack from '@mui/material/Stack';
 import AppTheme from '../AppTheme';
+import Content from '../components/Content';
+import SignInCard from '../components/SignInCard';
 import ColorModeSelect from '../theme/ColorModeSelect';
-import Content from './Content';
-import SignInCard from './SignInCard';
 
 export default function SignInSide(props: { disableCustomTheme?: boolean }) {
   return (
