@@ -15,10 +15,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import AppTheme from '../AppTheme';
 import ColorModeSelect from '../theme/ColorModeSelect';
-import { FacebookIcon, GoogleIcon, SitemarkIcon } from '../components/CustomIcons';
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
