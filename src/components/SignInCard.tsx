@@ -13,6 +13,10 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { authWithEmailPassword } from '../services/apiService';
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -38,6 +42,7 @@ export default function SignInCard() {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -47,16 +52,29 @@ export default function SignInCard() {
     setOpen(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!validateInputs()) {
       return;
     }
+
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const email = data.get('email') as string;
+    const password = data.get('password') as string;
+
+    try {
+      const response = await authWithEmailPassword(email, password); 
+      localStorage.setItem('token', response.data.token);
+      console.log('Login bem-sucedido:', response.data);
+      navigate('/dashboard');
+    } catch (error: any) {
+      console.error('Erro no login:', error);
+      setEmailError(true);
+      setPasswordError(true);
+      setEmailErrorMessage(error.response.data.message);
+      setPasswordErrorMessage(error.response.data.message);
+    }
   };
 
   const validateInputs = () => {

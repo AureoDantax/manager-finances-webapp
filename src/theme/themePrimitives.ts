@@ -325,14 +325,14 @@ export const colorSchemes = {
       divider: alpha(gray[700], 0.6),
       background: {
         default: gray[900],
-        paper: 'hsl(220, 30%, 7%)',
+        paper: 'hsl(219, 45.90%, 14.50%)',
       },
       text: {
         primary: 'hsl(0, 0%, 100%)',
         secondary: gray[400],
       },
       action: {
-        hover: alpha(gray[600], 0.2),
+        hover: alpha(gray[300], 0.2),
         selected: alpha(gray[600], 0.3),
       },
       baseShadow:

@@ -16,7 +16,7 @@ import React, { useEffect, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import Modal from '../components/Modal';
 import Notification from '../components/Notification';
-import { createCategory, getCategories } from '../services/api';
+import { createCategory, getCategories } from '../services/apiService';
 import { Category } from '../types';
 
 const CategoriesContainer = styled(Box)({
@@ -59,7 +59,6 @@ const CategoryForm = styled('form')({
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [newCategoryName, setNewCategoryName] = useState<string>('');
-  const [newCategoryTag, setNewCategoryTag] = useState<string>('');
   const [newCategoryColor, setNewCategoryColor] = useState<string>('#ffffff');
   const [newCategoryIsExpense, setNewCategoryIsExpense] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -99,13 +98,11 @@ const Categories: React.FC = () => {
     try {
       const newCategory = {
         name: newCategoryName,
-        tag: newCategoryTag,
         color: newCategoryColor,
         expense: newCategoryIsExpense,
       };
       await createCategory(newCategory);
       setNewCategoryName('');
-      setNewCategoryTag('');
       setNewCategoryColor('#ffffff');
       setNewCategoryIsExpense(false)
       const data = await getCategories();
@@ -143,12 +140,6 @@ const Categories: React.FC = () => {
               value={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
               sx={{ marginBottom: '20px' }}
-            />
-            <TextField
-              label="Tag da Categoria"
-              value={newCategoryTag}
-              onChange={(e) => setNewCategoryTag(e.target.value)}
-              sx={{ marginBottom: '10px' }}
             />
             <Box sx={{ marginBottom: '10px' }}>
               <Typography variant="subtitle1" sx={{ marginBottom: '5px' }}>Cor da Categoria</Typography>
