@@ -53,7 +53,7 @@ export const createItem = async (item: {name: string, category: Category, value:
 
 export const getBalance = async () => {
   try {
-    const response = await api.get('/balance');
+    const response = await api.get('/transactions/balance');
     return response.data
   } catch (error) {
     console.error('Erro ao buscar o balanço:', error);
