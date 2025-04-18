@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { getBalance } from '../services/api';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getBalance } from '../services/apiService';
 
 const DashboardContainer = styled.div`
   padding: 20px;

@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import {
-    Box,
-    Button,
-    List,
-    ListItem,
-    MenuItem,
-    Select,
-    TextField,
-    Typography,
+  Box,
+  Button,
+  List,
+  ListItem,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
 } from '@mui/material';
 import { styled } from '@mui/system';
-import AddBoxIcon from '@mui/icons-material/AddBox';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import Modal from '../components/Modal';
 import Notification from '../components/Notification';
-import { createItem, getCategories, getItems } from '../services/api';
+import { createItem, getCategories, getItems } from '../services/apiService';
 import { Category, Item } from '../types';
 
 const TransactionsContainer = styled(Box)({
@@ -32,6 +32,7 @@ const TransactionList = styled(List)({
 });
 
 const TransactionItem = styled(ListItem)(({ theme }) => ({
+    
     backgroundColor: theme.palette.mode === 'dark' ? '#2196f31a' : '#f9f9f9',
     border: '1px solid #eee',
     borderRadius: '8px',
@@ -42,6 +43,10 @@ const TransactionItem = styled(ListItem)(({ theme }) => ({
     alignItems: 'center',
     '& .MuiTypography-root': {
         fontWeight: 'bold',
+    },
+    ":hover": {
+        backgroundColor:'#1976d2',
+        cursor: 'pointer',
     },
 }));
 
@@ -62,7 +67,7 @@ const AddTransactionButton = styled(Button)({
 const Transactions: React.FC = () => {
     const [transactions, setTransactions] = useState<Item[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
-    const [newTransactionName, setNewTransactionName] = useState<string>('');
+    const [transactionDescription, setNewTransactionDescription] = useState<string>('');
     const [newTransactionValue, setNewTransactionValue] = useState<number>(0);
     const [newTransactionCategory, setNewTransactionCategory] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -109,13 +114,13 @@ const Transactions: React.FC = () => {
             const selectedCategory = categories.find((category) => category.id === newTransactionCategory);
             if (selectedCategory) {
                 const newTransaction = {
-                    name: newTransactionName,
+                    description: transactionDescription,
                     value: newTransactionValue,
                     category: selectedCategory,
                     registerDate: new Date().toISOString().split('T')[0],
                 };
                 await createItem(newTransaction);
-                setNewTransactionName('');
+                setNewTransactionDescription('');
                 setNewTransactionValue(0);
                 setNewTransactionCategory('');
                 const data = await getItems();
@@ -150,8 +155,8 @@ const Transactions: React.FC = () => {
                 <TransactionForm onSubmit={handleCreateTransaction}>
                     <TextField
                         label="Nome da Transação"
-                        value={newTransactionName}
-                        onChange={(e) => setNewTransactionName(e.target.value)}
+                        value={transactionDescription}
+                        onChange={(e) => setNewTransactionDescription(e.target.value)}
                         sx={{ marginBottom: '10px' }}
                     />
                     <TextField
@@ -182,7 +187,7 @@ const Transactions: React.FC = () => {
                 {transactions.map((transaction) => (
                     <motion.div whileHover={{ scale: 1.05 }}>
                         <TransactionItem key={transaction.id}>
-                            <Typography variant="body1">{transaction.name}</Typography>
+                            <Typography variant="body1">{transaction.description}</Typography>
                             <Typography variant="body2">{transaction.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</Typography>
                         </TransactionItem>
                     </motion.div>

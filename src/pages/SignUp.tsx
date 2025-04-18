@@ -13,13 +13,14 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 import * as React from 'react';
 import AppTheme from '../AppTheme';
+import { GoogleIcon, SitemarkIcon } from '../components/CustomIcons';
 import ColorModeSelect from '../theme/ColorModeSelect';
-import {  GoogleIcon, SitemarkIcon } from '../components/CustomIcons';
-import {  useGoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
+import api from '../services/apiService';
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -63,86 +64,83 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
-     const [email, setEmail] = React.useState<string>("");
-     const [password, setPassword] = React.useState<string>("");
-     const [firstName, setFirstName] = React.useState<string>("");
-     const [lastName, setLastName] = React.useState<string>("");
-   const [emailError, setEmailError] = React.useState(false);
-   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
+  const [email, setEmail] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
+  const [firstName, setFirstName] = React.useState<string>("");
+  const [lastName, setLastName] = React.useState<string>("");
+  const [emailError, setEmailError] = React.useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
-    const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-    const [nameError, setNameError] = React.useState(false);
-   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+  const [nameError, setNameError] = React.useState(false);
+  const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+  const navigate = useNavigate();
 
-    const validateInputs = () => {
-        const email = document.getElementById('email') as HTMLInputElement;
-       const password = document.getElementById('password') as HTMLInputElement;
-       const name = document.getElementById('name') as HTMLInputElement;
+  const validateInputs = () => {
+    const email = document.getElementById('email') as HTMLInputElement;
+    const password = document.getElementById('password') as HTMLInputElement;
+    const name = document.getElementById('name') as HTMLInputElement;
 
-       let isValid = true;
+    let isValid = true;
 
-          if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-            setEmailError(true);
-           setEmailErrorMessage('Please enter a valid email address.');
-            isValid = false;
-          } else {
-              setEmailError(false);
-                setEmailErrorMessage('');
-             }
+    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+      setEmailError(true);
+      setEmailErrorMessage('Please enter a valid email address.');
+      isValid = false;
+    } else {
+      setEmailError(false);
+      setEmailErrorMessage('');
+    }
 
-           if (!password.value || password.value.length < 6) {
-              setPasswordError(true);
-               setPasswordErrorMessage('Password must be at least 6 characters long.');
-              isValid = false;
-         } else {
-             setPasswordError(false);
-              setPasswordErrorMessage('');
-            }
+    if (!password.value || password.value.length < 6) {
+      setPasswordError(true);
+      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      isValid = false;
+    } else {
+      setPasswordError(false);
+      setPasswordErrorMessage('');
+    }
 
-          if (!name.value || name.value.length < 1) {
-              setNameError(true);
-            setNameErrorMessage('Sem o seu nome você é apeas um desconhecido');
-             isValid = false;
-           } else {
-              setNameError(false);
-            setNameErrorMessage('');
-        }
-          return isValid;
-    };
+    if (!name.value || name.value.length < 1) {
+      setNameError(true);
+      setNameErrorMessage('Sem o seu nome você é apeas um desconhecido');
+      isValid = false;
+    } else {
+      setNameError(false);
+      setNameErrorMessage('');
+    }
+    return isValid;
+  };
 
-     const login = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-          try {
-          const res = await axios.post("http://localhost:8085/api/auth/google", { idToken: tokenResponse.access_token });
-              localStorage.setItem('token', res.data.token);
-            
-           } catch (error) {
-              console.error("Erro ao fazer login com google: ", error)
-         }
-   },
+  const login = useGoogleLogin({
+    onSuccess: async (response) => {
+      axios.post('http://localhost:8085/api/auth/register', response.access_token)
+    },
   });
 
-      const handleSignUpWithEmailPassword = async (event: React.FormEvent<HTMLFormElement>) => {
-          event.preventDefault();
-            if(validateInputs()){
-                 try {
-                      const res = await axios.post("http://localhost:8085/api/auth/register", {
-                          user: { firstName, lastName, email, password }
-                        });
-                        localStorage.setItem('token', res.data.token);
-                        
-                 } catch (error : any) {
-                    console.error("Erro ao fazer cadastro com email/senha: ", error);
-                      setEmailError(true)
-                        setPasswordError(true)
-                         setNameError(true)
-                        setEmailErrorMessage(error.response.data.message)
-                         setPasswordErrorMessage(error.response.data.message)
-                      setNameErrorMessage(error.response.data.message)
-
-                   }
-                }
+  const handleSignUpWithEmailPassword = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (validateInputs()) {
+      try {
+        const res = await api.post("auth/sign-up", {
+          firstName, lastName, email, password
+        });
+        if (res.status === 201) {
+          navigate('/login');
         }
+
+      } catch (error: any) {
+        console.error("Erro ao fazer cadastro com email/senha: ", error);
+        setEmailError(true)
+        setPasswordError(true)
+        setNameError(true)
+        setEmailErrorMessage(error.response.data.message)
+        setPasswordErrorMessage(error.response.data.message)
+        setNameErrorMessage(error.response.data.message)
+
+      }
+    }
+  }
 
   return (
     <AppTheme {...props}>
@@ -160,77 +158,77 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
           </Typography>
           <Box
             component="form"
-             onSubmit={handleSignUpWithEmailPassword}
+            onSubmit={handleSignUpWithEmailPassword}
             sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
-             <FormControl>
-                <FormLabel htmlFor="name">Full name</FormLabel>
-                <TextField
-                     autoComplete="name"
-                     name="name"
-                      required
-                    fullWidth
-                       id="name"
-                     placeholder="Jon Snow"
-                      error={nameError}
-                      helperText={nameErrorMessage}
-                        color={nameError ? 'error' : 'primary'}
-                           onChange={e => setFirstName(e.target.value)}
-                   />
-              </FormControl>
-              <FormControl>
-                  <FormLabel htmlFor="lastName">Last Name</FormLabel>
-                    <TextField
-                        autoComplete="name"
-                       name="lastName"
-                        required
-                       fullWidth
-                         id="lastName"
-                         placeholder="Snow"
-                         error={nameError}
-                          helperText={nameErrorMessage}
-                          color={nameError ? 'error' : 'primary'}
-                             onChange={e => setLastName(e.target.value)}
-                      />
-                   </FormControl>
-              <FormControl>
-                   <FormLabel htmlFor="email">Email</FormLabel>
-                   <TextField
-                        required
-                      fullWidth
-                      id="email"
-                        placeholder="your@email.com"
-                     name="email"
-                      autoComplete="email"
-                       variant="outlined"
-                       error={emailError}
-                       helperText={emailErrorMessage}
-                       color={passwordError ? 'error' : 'primary'}
-                       onChange={e => setEmail(e.target.value)}
-                    />
-                </FormControl>
-               <FormControl>
-                   <FormLabel htmlFor="password">Password</FormLabel>
-                   <TextField
-                      required
-                        fullWidth
-                        name="password"
-                         placeholder="••••••"
-                       type="password"
-                        id="password"
-                          autoComplete="new-password"
-                         variant="outlined"
-                        error={passwordError}
-                         helperText={passwordErrorMessage}
-                      color={passwordError ? 'error' : 'primary'}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-               </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="name">Full name</FormLabel>
+              <TextField
+                autoComplete="name"
+                name="name"
+                required
+                fullWidth
+                id="name"
+                placeholder="Jon Snow"
+                error={nameError}
+                helperText={nameErrorMessage}
+                color={nameError ? 'error' : 'primary'}
+                onChange={e => setFirstName(e.target.value)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="lastName">Last Name</FormLabel>
+              <TextField
+                autoComplete="name"
+                name="lastName"
+                required
+                fullWidth
+                id="lastName"
+                placeholder="Snow"
+                error={nameError}
+                helperText={nameErrorMessage}
+                color={nameError ? 'error' : 'primary'}
+                onChange={e => setLastName(e.target.value)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                placeholder="your@email.com"
+                name="email"
+                autoComplete="email"
+                variant="outlined"
+                error={emailError}
+                helperText={emailErrorMessage}
+                color={passwordError ? 'error' : 'primary'}
+                onChange={e => setEmail(e.target.value)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="password">Password</FormLabel>
+              <TextField
+                required
+                fullWidth
+                name="password"
+                placeholder="••••••"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+                variant="outlined"
+                error={passwordError}
+                helperText={passwordErrorMessage}
+                color={passwordError ? 'error' : 'primary'}
+                onChange={e => setPassword(e.target.value)}
+              />
+            </FormControl>
             <FormControlLabel
               control={<Checkbox value="allowExtraEmails" color="primary" />}
-             label="I want to receive updates via email."
+              label="I want to receive updates via email."
             />
-           <Button
+            <Button
               type="submit"
               fullWidth
               variant="contained"
@@ -238,27 +236,27 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             >
               Sign up
             </Button>
-         </Box>
-           <Divider>
-              <Typography sx={{ color: 'text.secondary' }}>or</Typography>
-             </Divider>
+          </Box>
+          <Divider>
+            <Typography sx={{ color: 'text.secondary' }}>or</Typography>
+          </Divider>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <Button fullWidth variant="outlined"   onClick={() => login()} startIcon={<GoogleIcon />}>
-                          Sign in with Google
-                    </Button>
-            </Box>
-             <Typography sx={{ textAlign: 'center' }}>
-                Already have an account?{' '}
-               <Link
-                   href="/login"
-                    variant="body2"
-                     sx={{ alignSelf: 'center' }}
-                   >
-                     Sign in
-                </Link>
-               </Typography>
-          </Card>
+            <Button fullWidth variant="outlined" onClick={() => login()} startIcon={<GoogleIcon />}>
+              Sign in with Google
+            </Button>
+          </Box>
+          <Typography sx={{ textAlign: 'center' }}>
+            Already have an account?{' '}
+            <Link
+              href="/login"
+              variant="body2"
+              sx={{ alignSelf: 'center' }}
+            >
+              Sign in
+            </Link>
+          </Typography>
+        </Card>
       </SignUpContainer>
-      </AppTheme>
+    </AppTheme>
   );
 }

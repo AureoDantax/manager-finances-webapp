@@ -11,6 +11,7 @@ const SidebarContainer = styled.aside`
     display: flex;
     flex-direction: column;
     transition: background-color 0.3s;
+    height: 100vh;
 `;
 
 const SidebarNav = styled.nav`
@@ -36,7 +37,7 @@ const Sidebar: React.FC = () => {
   return (
     <SidebarContainer theme={theme}>
       <SidebarNav>
-        <SidebarLink to="/" theme={theme}>Dashboard</SidebarLink>
+        <SidebarLink to="/dashboard" theme={theme}>Dashboard</SidebarLink>
         <SidebarLink to="/categories" theme={theme}>Categorias</SidebarLink>
         <SidebarLink to="/transactions" theme={theme}>Transações</SidebarLink>
       </SidebarNav>
