@@ -85,16 +85,16 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+      setEmailErrorMessage('Digite um email válido.');
       isValid = false;
     } else {
       setEmailError(false);
       setEmailErrorMessage('');
     }
 
-    if (!password.value || password.value.length < 6) {
+    if (!password.value || password.value.length < 8) {
       setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      setPasswordErrorMessage('A senha deve possuir no mínimo 8 caracteres.');
       isValid = false;
     } else {
       setPasswordError(false);
@@ -197,7 +197,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 required
                 fullWidth
                 id="email"
-                placeholder="your@email.com"
+                placeholder="seu@email.com"
                 name="email"
                 autoComplete="email"
                 variant="outlined"
@@ -208,7 +208,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="password">Password</FormLabel>
+              <FormLabel htmlFor="password">Senha</FormLabel>
               <TextField
                 required
                 fullWidth
@@ -224,35 +224,39 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 onChange={e => setPassword(e.target.value)}
               />
             </FormControl>
-            <FormControlLabel
+
+            {/*  //TODO: Add a checkbox to receive emails*/}
+            {/* <FormControlLabel
               control={<Checkbox value="allowExtraEmails" color="primary" />}
               label="I want to receive updates via email."
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               onClick={validateInputs}
             >
-              Sign up
+              Cadastrar
             </Button>
           </Box>
           <Divider>
             <Typography sx={{ color: 'text.secondary' }}>or</Typography>
           </Divider>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+
+          {/* TODO: Add a button to sign up with Google*/}
+          {/* <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Button fullWidth variant="outlined" onClick={() => login()} startIcon={<GoogleIcon />}>
               Sign in with Google
             </Button>
-          </Box>
+          </Box> */}
           <Typography sx={{ textAlign: 'center' }}>
-            Already have an account?{' '}
+            Já possui uma conta?{' '}
             <Link
               href="/login"
               variant="body2"
               sx={{ alignSelf: 'center' }}
             >
-              Sign in
+              Fazer login
             </Link>
           </Typography>
         </Card>

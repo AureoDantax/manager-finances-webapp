@@ -164,6 +164,7 @@ export default function SignInCard() {
             color={passwordError ? 'error' : 'primary'}
           />
         </FormControl>
+        {/* TODO: implements remember me*/}
         {/* <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
           label="Remember me"
@@ -185,7 +186,9 @@ export default function SignInCard() {
           </span>
         </Typography>
       </Box>
-      <Divider>or</Divider>
+
+      {/* TODO: Add a button to sign up with Google and Facebook*/}
+      {/* <Divider>or</Divider> */}
       {/* <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Button
           fullWidth
