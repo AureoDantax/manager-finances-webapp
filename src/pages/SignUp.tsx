@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppTheme from '../AppTheme';
-import api, { signUpWithEmailPassword } from '../services/apiService';
+import { signUpWithEmailPassword } from '../services/apiService';
 import ColorModeSelect from '../theme/ColorModeSelect';
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
