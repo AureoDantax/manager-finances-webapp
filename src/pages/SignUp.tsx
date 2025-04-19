@@ -122,7 +122,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
         if (res.status === 201) {
           navigate('/login');
         }
-
+ 
       } catch (error: any) {
         console.error("Erro ao fazer cadastro com email/senha: ", error);
         setEmailError(true)
