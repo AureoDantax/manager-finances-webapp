@@ -98,7 +98,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
 
     if (!name.value || name.value.length < 1) {
       setNameError(true);
-      setNameErrorMessage('Sem o seu nome você é apeas um desconhecido');
+      setNameErrorMessage('Sem o seu nome você é apenas um desconhecido');
       isValid = false;
     } else {
       setNameError(false);
