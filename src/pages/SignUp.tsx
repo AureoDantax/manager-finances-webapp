@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppTheme from '../AppTheme';
-import api from '../services/apiService';
+import api, { signUpWithEmailPassword } from '../services/apiService';
 import ColorModeSelect from '../theme/ColorModeSelect';
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -118,9 +118,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     event.preventDefault();
     if (validateInputs()) {
       try {
-        const res = await api.post("auth/sign-up", {
-          firstName, lastName, email, password
-        });
+        const res = await signUpWithEmailPassword(firstName, lastName, email, password);
         if (res.status === 201) {
           navigate('/login');
         }

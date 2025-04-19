@@ -66,5 +66,14 @@ export const authWithEmailPassword = async (email: string, password: string) => 
     throw error;
   }
 }
+export const signUpWithEmailPassword = async (firstName: string, lastName: string, email: string, password: string) => {
+  try {
+    const response = await api.post('/auth/sign-up', { firstName, lastName, email, password });
+    return response;
+  } catch (error) {
+    console.error('Erro ao cadastrar com email/senha:', error);
+    throw error;
+  }
+}
 
 export default api;
