@@ -10,7 +10,6 @@ import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authWithEmailPassword } from '../services/apiService';
-import { SitemarkIcon } from './CustomIcons';
 import ForgotPassword from './ForgotPassword';
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -101,9 +100,9 @@ export default function SignInCard() {
 
   return (
     <Card variant="outlined">
-      <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-        <SitemarkIcon />
-      </Box>
+      {/* TODO: this is logo */}
+       {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+      </Box>  */}
       <Typography
         component="h1"
         variant="h4"

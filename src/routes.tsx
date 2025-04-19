@@ -9,7 +9,7 @@ import Sidebar from './components/Sidebar';
 import SignInSide from './pages/SignInSide';
 const MainContent: React.FC = () => {
   const location = useLocation();
-  const hideSidebar = location.pathname === '/LOGIN' || location.pathname === '/login' || location.pathname === '/sign-up' || location.pathname === '/';
+  const hideSidebar = location.pathname === '/LOGIN' || location.pathname === '/login' || location.pathname === '/sign-up/' || location.pathname === '/';
 
   return (
     <div style={{ display: 'flex' }}>
