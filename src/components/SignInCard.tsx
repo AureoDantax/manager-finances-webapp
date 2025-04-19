@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
-import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Link from '@mui/material/Link';
@@ -11,9 +10,7 @@ import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authWithEmailPassword } from '../services/apiService';
-import { SitemarkIcon } from './CustomIcons';
 import ForgotPassword from './ForgotPassword';
-
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -103,15 +100,15 @@ export default function SignInCard() {
 
   return (
     <Card variant="outlined">
-      <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-        <SitemarkIcon />
-      </Box>
+      {/* TODO: this is logo */}
+       {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+      </Box>  */}
       <Typography
         component="h1"
         variant="h4"
         sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
       >
-        Sign in
+        Entrar
       </Typography>
       <Box
         component="form"
@@ -171,7 +168,7 @@ export default function SignInCard() {
         /> */}
         <ForgotPassword open={open} handleClose={handleClose} />
         <Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
-          Sign in
+          Entrar
         </Button>
         <Typography sx={{ textAlign: 'center' }}>
           Ainda não tem conta?{' '}
@@ -180,8 +177,9 @@ export default function SignInCard() {
               href="/sign-up/"
               variant="body2"
               sx={{ alignSelf: 'center' }}
+              color='#4874db'
             >
-              Sign up
+              Cadastre-se aqui
             </Link>
           </span>
         </Typography>

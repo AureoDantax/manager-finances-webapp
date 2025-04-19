@@ -2,25 +2,20 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
-import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { useGoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
 import * as React from 'react';
-import AppTheme from '../AppTheme';
-import { GoogleIcon, SitemarkIcon } from '../components/CustomIcons';
-import ColorModeSelect from '../theme/ColorModeSelect';
 import { useNavigate } from 'react-router-dom';
+import AppTheme from '../AppTheme';
 import api from '../services/apiService';
+import ColorModeSelect from '../theme/ColorModeSelect';
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -112,11 +107,12 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     return isValid;
   };
 
-  const login = useGoogleLogin({
-    onSuccess: async (response) => {
-      axios.post('http://localhost:8085/api/auth/register', response.access_token)
-    },
-  });
+  // google login component
+  // const login = useGoogleLogin({
+  //   onSuccess: async (response) => {
+  //     axios.post('http://localhost:8085/api/auth/register', response.access_token)
+  //   },
+  // });
 
   const handleSignUpWithEmailPassword = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -148,13 +144,12 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
       <SignUpContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
-          <SitemarkIcon />
           <Typography
             component="h1"
             variant="h4"
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
-            Sign up
+            Cadastre-se
           </Typography>
           <Box
             component="form"
@@ -162,14 +157,14 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
             <FormControl>
-              <FormLabel htmlFor="name">Full name</FormLabel>
+              <FormLabel htmlFor="name">Nome</FormLabel>
               <TextField
                 autoComplete="name"
                 name="name"
                 required
                 fullWidth
                 id="name"
-                placeholder="Jon Snow"
+                placeholder="Fulano"
                 error={nameError}
                 helperText={nameErrorMessage}
                 color={nameError ? 'error' : 'primary'}
@@ -177,14 +172,14 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="lastName">Last Name</FormLabel>
+              <FormLabel htmlFor="lastName">Sobrenome</FormLabel>
               <TextField
                 autoComplete="name"
                 name="lastName"
                 required
                 fullWidth
                 id="lastName"
-                placeholder="Snow"
+                placeholder="da Silva"
                 error={nameError}
                 helperText={nameErrorMessage}
                 color={nameError ? 'error' : 'primary'}
@@ -240,7 +235,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             </Button>
           </Box>
           <Divider>
-            <Typography sx={{ color: 'text.secondary' }}>or</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>ou</Typography>
           </Divider>
 
           {/* TODO: Add a button to sign up with Google*/}
@@ -255,6 +250,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               href="/login"
               variant="body2"
               sx={{ alignSelf: 'center' }}
+              color='#4874db'
             >
               Fazer login
             </Link>
