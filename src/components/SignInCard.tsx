@@ -60,7 +60,6 @@ export default function SignInCard() {
     try {
       const response = await authWithEmailPassword(email, password);
       localStorage.setItem('token', response.data.token);
-      console.log('Autenticado:', response.data);
       navigate('/dashboard');
     } catch (error: any) {
       console.error('Erro no login:', error);

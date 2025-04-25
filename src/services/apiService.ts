@@ -38,7 +38,6 @@ export const getItems = async () => {
 
 export const createItem = async (item: {description: string, category: Category, value: number, registerDate:string}) => {
     try {
-      console.log('Item criado:', item);
         const response = await api.post('/transactions', item);
         return response.data;
     } catch (error) {
